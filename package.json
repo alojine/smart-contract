@@ -1,0 +1,25 @@
+{
+  "name": "smart-contract",
+  "version": "1.0.0",
+  "description": "Developing \"smart contracts\" to create a safe ant secure way to support business.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alojine/smart-contract.git"
+  },
+  "keywords": [
+    "smart-contract"
+  ],
+  "author": "Benjaminas Paliokas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alojine/smart-contract/issues"
+  },
+  "homepage": "https://github.com/alojine/smart-contract#readme",
+  "dependencies": {
+    "truffle": "^5.6.7"
+  }
+}
