@@ -6,15 +6,18 @@ contract Lottery{
     address public owner;
     address[] public players;
     string public description;
-    uint public amount = 0.1 ether; 
+    uint public amount = 0.1 ether;
 
+    constructor(){
+        owner = msg.sender;
+    }
 
     function lottery() public {
         owner = msg.sender;
     }
 
     function enter() public payable{
-        require(msg.value > amount);
+        require(msg.value > 1 ether);
         players.push(msg.sender);
     }
 
