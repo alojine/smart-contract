@@ -9,7 +9,6 @@ contract Lottery{
     uint public amount = 0.1 ether; 
 
 
-
     function lottery() public {
         owner = msg.sender;
     }
