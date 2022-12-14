@@ -1,37 +1,61 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.4.0 <0.9.0;
 
-contract Lottery{
-
+contract Lottery {
     address public owner;
-    address[] public players;
-    string public description;
-    uint public amount = 0.1 ether;
+    address payable[] public players;
+    uint public lotteryId;
+    mapping (uint => address payable) public lotteryHistory; 
 
-    constructor(){
+    // Owner initial sender
+    constructor() {
         owner = msg.sender;
+        lotteryId = 1;
     }
 
-    function lottery() public {
-        owner = msg.sender;
+    // Checking for player amount
+    function enter() public payable {
+        require(msg.value > .01 ether);
+        players.push(payable(msg.sender));
     }
 
-    function enter() public payable{
-        require(msg.value > 1 ether);
-        players.push(msg.sender);
+    // Get random number
+    function getRandom() public view returns (uint) {
+        // keccak256 hashing algorithm
+        return uint(keccak256(abi.encodePacked(owner, block.timestamp)));
     }
 
-    function getRandom() private view returns(uint){
-        return uint (keccak256(abi.encode(block.timestamp, players)));
+    // Pick winner
+    function pickWinner() public onlyOwner{
+        uint i = getRandom() % players.length;
+        players[i].transfer(address(this).balance);
+
+        // Increase lottery history and round
+        lotteryHistory[lotteryId] = players[i];
+        lotteryId++;
+
+        // new round array
+        players = new address payable[](0);
     }
 
-    function getWinner() public isOwner{
-        uint index = getRandom() % players.length;
-        payable (players[index]).transfer(address(this).balance);
-        players = new address[](0);
+
+    // Get winner at lottery
+    function getWinnerByLottery(uint idOfLottery) public view returns (address payable) {
+        return lotteryHistory[idOfLottery];
     }
 
-    modifier isOwner(){
+    // Get balance
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+
+    // Get players
+    function getPlayers() public view returns (address payable[] memory) {
+        return players;
+    }
+
+    // Modifiers
+    modifier onlyOwner() {
         require(msg.sender == owner);
         _;
     }

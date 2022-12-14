@@ -1,0 +1,9 @@
+# Lottery DAPP Using smart-contract
+
+Creating as simple smart contract for custom lottery using solidity programming language.
+
+## Smart contract
+
+- players can enter lottery if they have required amount of Ether
+- lottery owner picks the winner
+- winner gets the prize
