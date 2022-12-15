@@ -13,8 +13,4 @@ contract("TestingLottery", function(accounts){
         await Lottery.deployed();
         return assert.isTrue(true);
     });
-
-    // it("it should allow player to enter the lottery", async () => {
-    //     await Lottery.
-    // });
 })
