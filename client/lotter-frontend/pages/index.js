@@ -6,31 +6,32 @@ import 'bulma/css/bulma.css'
 
 export default function Home() {
 
+  let account;
+
   const [web3, setWeb3] = useState()
   const [address, setAddress] = useState()
 
   const connectWalletHandler = async () => {
     if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
-      try{
+      try {
 
-        await window.ethereum.request({ method: "eth_requestAccounts"})
+        await window.ethereum.request({ method: "eth_requestAccounts" })
         const web3 = new Web3(window.ethereum)
         setWeb3(web3)
-        
+
         const accounts = await web3.eth.getAccounts()
         setAddress(accounts[0])
 
-      } catch(err){
+      } catch (err) {
         console.log(err.message)
       }
     }
   }
 
-
   return (
     <div>
       <Head>
-        <title>Ether lottery</title>
+        <title id="connect-metamask">Ether lottery</title>
         <meta name="description" content="Lottery for smart contract dapp" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -43,6 +44,7 @@ export default function Home() {
             </div>
             <div className="navbar-end">
               <button onClick={connectWalletHandler} className="button is-link">Connect wallet</button>
+              <div id="connect-metamask"></div>
             </div>
           </div>
         </nav>
@@ -52,7 +54,8 @@ export default function Home() {
               <div className="column is-two-thirds">
                 <section className="mt-5">
                   <p>Enter the lottery</p>
-                  <button className="button is-link is-large is-light">Enter</button>
+                  <button onlick={enter} className="button is-link is-large is-light">Enter</button>
+                  <p>Entered players</p>
                 </section>
                 <section className="mt-6">
                   <p><b>Owner only: </b>Pick a winner</p>
@@ -60,7 +63,7 @@ export default function Home() {
                 </section>
               </div>
               <div className="column is-one-third">
-                <section className="mt-5">
+                {/* <section className="mt-5">
                   <div class="card">
                     <div class="card-content">
                       <div class="content">
@@ -70,13 +73,13 @@ export default function Home() {
                             Lottery #1 winner:
                           </div>
                           <div>
-                          0x4D89efb84f646aFdfa4520BD1bf2c06a825B8d2A
+                            0x4D89efb84f646aFdfa4520BD1bf2c06a825B8d2A
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </section>
+                </section> */}
 
                 <section className="mt-5">
                   <div class="card">
@@ -84,8 +87,8 @@ export default function Home() {
                       <div class="content">
                         <h2>Players (1)</h2>
                         <div className="history-entry">
-                          <div>
-                            0x4D89efb84f646aFdfa4520BD1bf2c06a825B8d2A
+                          <div id="entered-players">
+                            0
                           </div>
                         </div>
                       </div>
@@ -103,6 +106,18 @@ export default function Home() {
                     </div>
                   </div>
                 </section>
+                
+                <section className="mt-5">
+                  <div class="card">
+                    <div class="card-content">
+                      <div class="content">
+                        <h2>Winner</h2>
+                        <p><div id="winner">null</div></p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
               </div>
             </div>
           </section>
